@@ -2,217 +2,34 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>구글 API Key 발급 가이드</title>
+    <title>Gemini API 키 발급 가이드</title>
     <style>
-        :root {
-            --google-blue: #4285F4;
-            --google-red: #EA4335;
-            --google-yellow: #FBBC05;
-            --google-green: #34A853;
-            --text-color: #333;
-            --bg-color: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        header {
-            text-align: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--google-blue);
-            margin-bottom: 10px;
-        }
-
-        .intro {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .step-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .step-item {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 40px;
-        }
-
-        .step-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 35px;
-            height: 35px;
-            background-color: var(--google-blue);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 35px;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        /* 단계별 색상 포인트 */
-        .step-item:nth-child(2) .step-number { background-color: var(--google-red); }
-        .step-item:nth-child(3) .step-number { background-color: var(--google-yellow); }
-        .step-item:nth-child(4) .step-number { background-color: var(--google-green); }
-
-        .step-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: #222;
-        }
-
-        .step-content {
-            background: #f1f3f4;
-            padding: 15px 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--google-blue);
-        }
-        .step-item:nth-child(2) .step-content { border-left-color: var(--google-red); }
-        .step-item:nth-child(3) .step-content { border-left-color: var(--google-yellow); }
-        .step-item:nth-child(4) .step-content { border-left-color: var(--google-green); }
-
-        .step-content ul {
-            margin: 5px 0 0 0;
-            padding-left: 20px;
-        }
-
-        .btn-link {
-            display: inline-block;
-            background-color: var(--google-blue);
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-
-        .btn-link:hover {
-            background-color: #357ae8;
-        }
-
-        .warning-box {
-            background-color: #fce8e6;
-            border: 1px solid var(--google-red);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 30px;
-        }
-
-        .warning-title {
-            color: var(--google-red);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        body { font-family: 'Malgun Gothic', sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; color: #333; }
+        h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
+        .step { background: #f8f9fa; border-left: 5px solid #1a73e8; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+        .warning { background: #fce8e6; border-left: 5px solid #d93025; padding: 15px; border-radius: 4px; color: #a51d24; }
+        img { max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>🔑 Google API Key 발급 가이드</h1>
-        <p class="intro">구글 지도, 유튜브, 번역 등 구글 서비스를 연동하기 위한 API 키 발급 절차입니다.</p>
-    </header>
+    <h1>🚀 초보자도 1분 만에 끝내는 Gemini API 키 발급 가이드</h1>
+    
+    <div class="step">
+        <h3>1단계: [Gemini API 키 만들기] 버튼 클릭</h3>
+        <p>현재 구글 클라우드 콘솔 화면 중앙에 있는 파란색 <strong>[+ Gemini API 키 만들기]</strong> 버튼을 클릭하세요.</p>
+        <img src="현재_구글콘솔_화면캡처.png" alt="구글 콘솔 화면 안내">
+    </div>
 
-    <main>
-        <ul class="step-list">
-            <!-- 1단계 -->
-            <li class="step-item">
-                <div class="step-number">1</div>
-                <div class="step-title">Google Cloud Console 접속 및 프로젝트 생성</div>
-                <div class="step-content">
-                    <p>구글 클라우드 콘솔에 로그인한 뒤, 서비스를 이용할 프로젝트를 생성해야 합니다.</p>
-                    <ul>
-                        <li>오른쪽 상단의 [프로젝트 선택] -> [새 프로젝트]를 클릭합니다.</li>
-                        <li>프로젝트 이름을 입력하고 [만들기]를 누릅니다.</li>
-                    </ul>
-                    <a href="https://console.cloud.google.com/" target="_blank" class="btn-link">구글 클라우드 콘솔 바로가기 ↗</a>
-                </div>
-            </li>
+    <div class="step">
+        <h3>2단계: 키 복사 및 저장</h3>
+        <p>이동한 페이지에서 API 키가 생성되면 <strong>[복사(Copy)]</strong> 버튼을 눌러 메모장에 잘 저장해 두세요.</p>
+    </div>
 
-            <!-- 2단계 -->
-            <li class="step-item">
-                <div class="step-number">2</div>
-                <div class="step-title">사용할 라이브러리(API) 활성화</div>
-                <div class="step-content">
-                    <p>내 프로젝트에서 어떤 구글 서비스(예: Maps, YouTube 등)를 쓸지 선택해야 합니다.</p>
-                    <ul>
-                        <li>왼쪽 메뉴(작대기 3개)에서 <strong>[API 및 서비스] > [라이브러리]</strong>로 이동합니다.</li>
-                        <li>사용하려는 API(예: <em>YouTube Data API v3</em> 등)를 검색합니다.</li>
-                        <li>해당 API를 클릭하고 <strong>[사용]</strong> 버튼을 누릅니다.</li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- 3단계 -->
-            <li class="step-item">
-                <div class="step-number">3</div>
-                <div class="step-title">사용자 인증 정보 및 API Key 생성</div>
-                <div class="step-content">
-                    <p>이제 실제로 웹페이지나 앱에 넣을 키를 발급받을 차례입니다.</p>
-                    <ul>
-                        <li>왼쪽 메뉴에서 <strong>[API 및 서비스] > [사용자 인증 정보]</strong>로 이동합니다.</li>
-                        <li>상단의 <strong>[+ 사용자 인증 정보 만들기]</strong> 버튼을 클릭합니다.</li>
-                        <li>드롭다운 메뉴에서 <strong>[API 키]</strong>를 선택하면 즉시 키가 생성됩니다!</li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- 4단계 -->
-            <li class="step-item">
-                <div class="step-number">4</div>
-                <div class="step-title">보안을 위한 API 키 제한 (권장)</div>
-                <div class="step-content">
-                    <p>발급받은 키를 다른 사람이 도용해 사용하면 요금이 청구될 수 있으므로 제한을 걸어두는 것이 안전합니다.</p>
-                    <ul>
-                        <li>생성된 API 키 옆의 수정(연필) 아이콘이나 <strong>[키 제한]</strong>을 클릭합니다.</li>
-                        <li><strong>애플리케이션 제한:</strong> 웹사이트에서 쓸 경우 [웹사이트(HTTP 리퍼러)]를 선택하고 본인의 도메인을 등록합니다.</li>
-                        <li><strong>API 제한:</strong> 이 키가 특정 API(예: YouTube API)에만 작동하도록 묶어둡니다.</li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-
-        <!-- 주의사항 영역 -->
-        <div class="warning-box">
-            <div class="warning-title">⚠️ 보안 주의사항 (중요!)</div>
-            <p style="margin: 0; color: #555; font-size: 0.95em;">
-                발급받은 API 키는 일종의 비밀번호입니다. <strong>GitHub 같은 공개 저장소에 소스 코드를 올릴 때 키가 그대로 노출되지 않도록 주의</strong>하세요. 만약 노출되었다면 즉시 해당 키를 삭제(삭제/해제)하고 재발급받으셔야 합니다.
-            </p>
-        </div>
-    </main>
-</div>
+    <div class="warning">
+        <strong>⚠️ 주의하세요!</strong><br>
+        발급된 API 키는 나만의 비밀번호입니다. 다른 사람에게 절대 공유하지 마세요!
+    </div>
 
 </body>
 </html>
