@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google AI Studio API 키 만들기 초보자 가이드</title>
+    <title>Google AI Studio API 키 발급 초간단 가이드</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -15,113 +15,103 @@
             --text-muted: #c4c7c5;
             --border-color: #3c4043;
             --google-blue: #8ab4f8;
-            --point-color: #ff4b4b;
+            --point-red: #ff4b4b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); padding: 40px 20px; line-height: 1.6; }
         
-        .container { max-width: 750px; margin: 0 auto; }
+        .container { max-width: 700px; margin: 0 auto; }
         
-        header { text-align: center; margin-bottom: 35px; }
+        header { text-align: center; margin-bottom: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
-        header h1 i { color: var(--google-blue); margin-right: 8px; }
         header p { color: var(--text-muted); font-size: 1rem; }
+        header span { color: var(--google-blue); font-weight: bold; }
 
-        /* 가이드 카드 스타일 */
         .step-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 25px;
             margin-bottom: 25px;
-            position: relative;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
 
-        .step-badge {
+        .step-num {
             display: inline-block;
             background-color: var(--google-blue);
-            color: #000;
+            color: #131314;
             font-weight: bold;
-            padding: 3px 12px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .step-card h2 { font-size: 1.3rem; color: #fff; margin-bottom: 10px; }
+        .step-card h2 { font-size: 1.3rem; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .step-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px; }
-        .step-card p strong { color: #fff; }
+        .step-card strong { color: #fff; }
 
-        /* 화면 요소를 흉내 낸 박스 */
-        .mock-ui {
+        /* 현재 화면 UI 요소 모사 */
+        .mock-screen {
             background-color: #131314;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 15px;
+            padding: 20px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        /* 실제 화면 버튼 디자인 복제 */
-        .mock-btn {
+        .mock-header { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* 반짝이는 버튼 이펙트 */
+        .real-btn-mock {
             background-color: #fff;
             color: #000;
-            border: none;
+            border: 2px solid var(--point-red);
             padding: 8px 16px;
             border-radius: 100px;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            border: 2px solid var(--point-color);
-            animation: pulse 1.5s infinite;
+            animation: point-blink 1.5s infinite alternate;
         }
 
-        /* 미니 테이블 구조 복제 */
-        .mock-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            text-align: left;
-        }
-        .mock-table th { color: #fff; padding: 8px; border-bottom: 1px solid var(--border-color); }
+        /* 미니 테이블 */
+        .mock-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+        .mock-table th { color: #fff; padding: 8px; border-bottom: 1px solid var(--border-color); font-weight: 500; }
         .mock-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
 
-        .icon-btn {
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 4px 8px;
-            border-radius: 4px;
-            background: #202124;
+        .copy-btn-mock {
+            color: var(--google-blue);
+            background-color: #202124;
+            border: 2px solid var(--point-red);
+            padding: 6px 10px;
+            border-radius: 6px;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            border: 2px solid var(--point-color);
-            animation: pulse 1.5s infinite;
+            cursor: pointer;
+            animation: point-blink 1.5s infinite alternate;
         }
 
-        /* 전구 안내창 */
         .tip-box {
-            background-color: rgba(138, 180, 248, 0.1);
+            background-color: rgba(138, 180, 248, 0.08);
             border-left: 4px solid var(--google-blue);
             padding: 12px 15px;
             border-radius: 0 8px 8px 0;
             font-size: 0.9rem;
             color: #c2e7ff;
-            margin-top: 10px;
+            margin-top: 15px;
         }
-        .tip-box i { margin-right: 6px; }
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 75, 0.7); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(255, 75, 75, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 75, 75, 0); }
+        @keyframes point-blink {
+            from { transform: scale(1); box-shadow: 0 0 4px var(--point-red); }
+            to { transform: scale(1.04); box-shadow: 0 0 16px var(--point-red); }
         }
     </style>
 </head>
@@ -129,49 +119,53 @@
 
 <div class="container">
     <header>
-        <h1><i class="fa-solid fa-wand-magic-sparkles"></i> 내 화면 보며 API 키 만들기</h1>
-        <p>지금 켜져 있는 Google AI Studio 화면에서 딱 두 가지만 기억하세요!</p>
+        <h1><i class="fa-solid fa-desktop"></i> 현재 화면 기준 API 키 가이드</h1>
+        <p>지금 띄워두신 <span>Google AI Studio</span> 화면을 보며 순서대로 따라 해보세요!</p>
     </header>
 
     <div class="step-card">
-        <span class="step-badge">1단계</span>
+        <span class="step-num">클릭 1</span>
         <h2>우측 상단의 흰색 버튼 누르기</h2>
-        <p>지금 보고 계신 화면의 오른쪽 위를 보시면 아래와 같이 생긴 <strong>[API 키 만들기]</strong> 버튼이 있습니다. 망설이지 말고 클릭하세요!</p>
+        <p>현재 화면의 오른쪽 윗부분을 보시면 흰색 배경의 <strong>[🔑 API 키 만들기]</strong> 버튼이 있습니다. 새로운 비밀번호 열쇠를 발급받기 위해 이 버튼을 눌러주세요.</p>
         
-        <div class="mock-ui">
-            <div class="mock-btn">
-                <i class="fa-solid fa-key"></i> API 키 만들기
+        <div class="mock-screen">
+            <div class="mock-header">
+                <span style="font-weight: bold; font-size: 1.2rem;">API 키</span>
+                <div class="real-btn-mock">
+                    <i class="fa-solid fa-key"></i> API 키 만들기
+                </div>
             </div>
         </div>
         
         <div class="tip-box">
-            <i class="fa-solid fa-lightbulb"></i> <strong>팁:</strong> 버튼을 누르면 영어로 된 작은 창이 뜹니다. 당황하지 마시고 가장 첫 번째 파란 글씨인 <strong>"Create API key in new project" (새 프로젝트에 API 키 만들기)</strong>를 누르시면 3초 뒤에 완료됩니다!
+            <i class="fa-solid fa-circle-info"></i> <strong>버튼을 누른 후 대처법:</strong><br>
+            영어 팝업창이 뜨면 당황하지 마시고 맨 위에 있는 파란색 글씨인 <strong>"Create API key in new project" (새 프로젝트에 API 키 만들기)</strong>를 클릭해 주시면 됩니다.
         </div>
     </div>
 
     <div class="step-card">
-        <span class="step-badge">2단계</span>
-        <h2>생성된 열쇠(Key) 복사하기</h2>
-        <p>키가 생성되면 화면 중간 목록에 아래와 같이 추가됩니다. 맨 오른쪽에 있는 <strong>[사각형 아이콘(복사)]</strong> 버튼을 누르면 컴퓨터에 자동으로 저장됩니다.</p>
+        <span class="step-num">클릭 2</span>
+        <h2>생성된 키 복사(저장)하기</h2>
+        <p>키가 정상적으로 만들어지면 현재 화면 중앙 목록(zeromeal 또는 openclaw 옆)에 추가됩니다. 목록 오른쪽에 있는 <strong>[복사 아이콘]</strong>을 누르면 컴퓨터에 글자가 자동으로 복사됩니다.</p>
         
-        <div class="mock-ui">
+        <div class="mock-screen">
             <table class="mock-table">
                 <thead>
                     <tr>
                         <th>키</th>
                         <th>프로젝트</th>
                         <th>결제 등급</th>
-                        <th>버튼</th>
+                        <th>복사하기</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="color:var(--google-blue)">...Agv4<br><small style="color:#666">Camera</small></td>
+                        <td style="color: var(--google-blue);">...Agv4<br><small style="color: #666;">Camera</small></td>
                         <td>zeromeal</td>
                         <td>무료 등급</td>
                         <td>
-                            <div class="icon-btn">
-                                <i class="fa-regular fa-copy"></i> <span style="font-size:11px; color:#fff;">클릭(복사)</span>
+                            <div class="copy-btn-mock">
+                                <i class="fa-regular fa-copy"></i> <span style="font-size: 11px; font-weight: bold;">복사</span>
                             </div>
                         </td>
                     </tr>
@@ -179,8 +173,9 @@
             </table>
         </div>
 
-        <div class="tip-box" style="background-color: rgba(255, 75, 75, 0.05); border-left-color: var(--point-color); color: #ffb4b4;">
-            <i class="fa-solid fa-triangle-exclamation"></i> <strong>주의:</strong> 복사한 키는 메모장 같은 곳에 붙여넣기(Ctrl+V)해서 안전하게 보관하세요. 이 비밀번호는 다른 사람에게 절대 공유하면 안 됩니다!
+        <div class="tip-box" style="background-color: rgba(255, 75, 75, 0.05); border-left-color: var(--point-red); color: #ffb4b4;">
+            <i class="fa-solid fa-triangle-exclamation"></i> <strong>보안 주의사항:</strong><br>
+            복사한 키는 메모장(`Ctrl + V`)에 붙여넣어 따로 안전하게 저장해 두세요. 이 키는 나만의 인공지능 비밀번호이므로 다른 사람에게 절대 공유하면 안 됩니다!
         </div>
     </div>
 </div>
