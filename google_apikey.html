@@ -3,115 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google AI Studio API 키 발급 초간단 가이드</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>Google AI Studio API Key 발급 가이드</title>
     <style>
         :root {
-            --bg-color: #131314;
-            --card-bg: #1e1f20;
-            --text-main: #e3e3e3;
-            --text-muted: #c4c7c5;
-            --border-color: #3c4043;
-            --google-blue: #8ab4f8;
-            --point-red: #ff4b4b;
+            --primary-color: #1a73e8;
+            --text-color: #3c4043;
+            --bg-color: #f8f9fa;
+            --border-color: #dadce0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); padding: 40px 20px; line-height: 1.6; }
-        
-        .container { max-width: 700px; margin: 0 auto; }
-        
-        header { text-align: center; margin-bottom: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-        header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
-        header p { color: var(--text-muted); font-size: 1rem; }
-        header span { color: var(--google-blue); font-weight: bold; }
-
-        .step-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
         }
 
-        .step-num {
-            display: inline-block;
-            background-color: var(--google-blue);
-            color: #131314;
-            font-weight: bold;
-            padding: 2px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .step-card h2 { font-size: 1.3rem; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .step-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px; }
-        .step-card strong { color: #fff; }
-
-        /* 현재 화면 UI 요소 모사 */
-        .mock-screen {
-            background-color: #131314;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
             padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #1f1f1f;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+
+        p.subtitle {
+            color: #70757a;
+            margin: 0;
+        }
+
+        .step {
+            margin-bottom: 50px;
+        }
+
+        .step-title {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .mock-header { display: flex; justify-content: space-between; align-items: center; }
-        
-        /* 반짝이는 버튼 이펙트 */
-        .real-btn-mock {
-            background-color: #fff;
-            color: #000;
-            border: 2px solid var(--point-red);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            animation: point-blink 1.5s infinite alternate;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
         }
 
-        /* 미니 테이블 */
-        .mock-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
-        .mock-table th { color: #fff; padding: 8px; border-bottom: 1px solid var(--border-color); font-weight: 500; }
-        .mock-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 14px;
+        }
 
-        .copy-btn-mock {
-            color: var(--google-blue);
-            background-color: #202124;
-            border: 2px solid var(--point-red);
-            padding: 6px 10px;
+        .instruction-box {
+            background-color: #f1f3f4;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 20px;
+        }
+
+        .instruction-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .instruction-box li {
+            margin-bottom: 8px;
+        }
+
+        .instruction-box li:last-child {
+            margin-bottom: 0;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            display: inline-flex;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: #eaeaea;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            animation: point-blink 1.5s infinite alternate;
+            aspect-ratio: 4 / 3;
         }
 
-        .tip-box {
-            background-color: rgba(138, 180, 248, 0.08);
-            border-left: 4px solid var(--google-blue);
-            padding: 12px 15px;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.9rem;
-            color: #c2e7ff;
-            margin-top: 15px;
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        @keyframes point-blink {
-            from { transform: scale(1); box-shadow: 0 0 4px var(--point-red); }
-            to { transform: scale(1.04); box-shadow: 0 0 16px var(--point-red); }
+        .badge {
+            background-color: #e8f0fe;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            border: 2px dashed #ea4335;
+            padding: 2px 4px;
+            background-color: #fce8e6;
+            color: #c5221f;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #70757a;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -119,65 +146,47 @@
 
 <div class="container">
     <header>
-        <h1><i class="fa-solid fa-desktop"></i> 현재 화면 기준 API 키 가이드</h1>
-        <p>지금 띄워두신 <span>Google AI Studio</span> 화면을 보며 순서대로 따라 해보세요!</p>
+        <h1>Google AI Studio API Key 발급 가이드</h1>
+        <p class="subtitle">Gemini API를 사용하기 위한 API 키 생성 단계별 안내</p>
     </header>
 
-    <div class="step-card">
-        <span class="step-num">클릭 1</span>
-        <h2>우측 상단의 흰색 버튼 누르기</h2>
-        <p>현재 화면의 오른쪽 윗부분을 보시면 흰색 배경의 <strong>[🔑 API 키 만들기]</strong> 버튼이 있습니다. 새로운 비밀번호 열쇠를 발급받기 위해 이 버튼을 눌러주세요.</p>
-        
-        <div class="mock-screen">
-            <div class="mock-header">
-                <span style="font-weight: bold; font-size: 1.2rem;">API 키</span>
-                <div class="real-btn-mock">
-                    <i class="fa-solid fa-key"></i> API 키 만들기
-                </div>
-            </div>
+    <section class="step">
+        <div class="step-title">
+            <span class="step-number">1</span>
+            <span>API 키 생성 시작하기</span>
         </div>
-        
-        <div class="tip-box">
-            <i class="fa-solid fa-circle-info"></i> <strong>버튼을 누른 후 대처법:</strong><br>
-            영어 팝업창이 뜨면 당황하지 마시고 맨 위에 있는 파란색 글씨인 <strong>"Create API key in new project" (새 프로젝트에 API 키 만들기)</strong>를 클릭해 주시면 됩니다.
+        <div class="instruction-box">
+            <ul>
+                <li>Google AI Studio 대시보드에 접속합니다.</li>
+                <li>우측 상단에 있는 <span class="badge">🔑 API 키 만들기</span> 버튼을 클릭합니다.</li>
+            </ul>
         </div>
-    </div>
+        <div class="image-placeholder">
+            <img src="https://rayis7.github.io/boxing_app/api_01.png" alt="Google AI Studio 대시보드 - API 키 만들기 버튼 클릭">
+        </div>
+    </section>
 
-    <div class="step-card">
-        <span class="step-num">클릭 2</span>
-        <h2>생성된 키 복사(저장)하기</h2>
-        <p>키가 정상적으로 만들어지면 현재 화면 중앙 목록(zeromeal 또는 openclaw 옆)에 추가됩니다. 목록 오른쪽에 있는 <strong>[복사 아이콘]</strong>을 누르면 컴퓨터에 글자가 자동으로 복사됩니다.</p>
-        
-        <div class="mock-screen">
-            <table class="mock-table">
-                <thead>
-                    <tr>
-                        <th>키</th>
-                        <th>프로젝트</th>
-                        <th>결제 등급</th>
-                        <th>복사하기</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="color: var(--google-blue);">...Agv4<br><small style="color: #666;">Camera</small></td>
-                        <td>zeromeal</td>
-                        <td>무료 등급</td>
-                        <td>
-                            <div class="copy-btn-mock">
-                                <i class="fa-regular fa-copy"></i> <span style="font-size: 11px; font-weight: bold;">복사</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <section class="step">
+        <div class="step-title">
+            <span class="step-number">2</span>
+            <span>프로젝트 선택 및 키 발급</span>
         </div>
+        <div class="instruction-box">
+            <ul>
+                <li><strong>새 키 만들기</strong> 팝업 창이 나타나면 <span class="badge">키 이름 지정</span> 입력란에 식별하기 좋은 이름을 입력합니다. (예: Gemini API Key)</li>
+                <li><span class="badge">가져온 프로젝트 선택</span> 드롭다운 메뉴를 클릭합니다.</li>
+                <li>기존에 생성된 Google Cloud 프로젝트가 있다면 리스트에서 선택하거나, 새로 만들어야 할 경우 <span class="highlight">➕ 프로젝트 만들기</span>를 클릭하여 새 프로젝트를 생성합니다.</li>
+                <li>연결이 완료되면 API 키가 발급됩니다.</li>
+            </ul>
+        </div>
+        <div class="image-placeholder">
+            <img src="https://rayis7.github.io/boxing_app/api_02.png" alt="새 키 만들기 팝업 - 프로젝트 선택 및 생성">
+        </div>
+    </section>
 
-        <div class="tip-box" style="background-color: rgba(255, 75, 75, 0.05); border-left-color: var(--point-red); color: #ffb4b4;">
-            <i class="fa-solid fa-triangle-exclamation"></i> <strong>보안 주의사항:</strong><br>
-            복사한 키는 메모장(`Ctrl + V`)에 붙여넣어 따로 안전하게 저장해 두세요. 이 키는 나만의 인공지능 비밀번호이므로 다른 사람에게 절대 공유하면 안 됩니다!
-        </div>
-    </div>
+    <footer>
+        <p>© 2026 Google AI Studio Guide. All rights reserved.</p>
+    </footer>
 </div>
 
 </body>
