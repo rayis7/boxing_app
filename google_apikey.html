@@ -3,234 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초보자용 Google AI Studio API 키 발급 가이드</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <title>Google AI Studio API 키 만들기 연습방</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         :root {
-            --bg-color: #131314;
-            --card-bg: #1e1f20;
-            --primary-blue: #8ab4f8;
-            --text-color: #e3e3e3;
+            --bg-main: #131314;
+            --bg-side: #1e1f20;
+            --text-main: #e3e3e3;
+            --text-muted: #c4c7c5;
             --border-color: #3c4043;
+            --blue-accent: #8ab4f8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 40px 20px; }
-        
-        .container { max-width: 800px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { color: #fff; font-size: 2rem; margin-bottom: 10px; }
-        header h1 span { color: var(--primary-blue); }
+        body { background-color: var(--bg-main); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-        /* 가이드 박스 */
-        .guide-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-
-        /* 상단 진행 바 */
-        .progress-bar {
+        /* 왼쪽 사이드바 (구글 화면 복제) */
+        .sidebar {
+            width: 260px;
+            background-color: #1a1b1c;
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            position: relative;
+            flex-direction: column;
+            gap: 8px;
         }
-        .progress-bar::before {
-            content: '';
-            position: absolute;
-            top: 15px; left: 0; right: 0; height: 2px;
-            background-color: var(--border-color);
-            z-index: 1;
-        }
-        .step-dot {
-            width: 32px; height: 32px;
-            background-color: #303134;
-            border: 2px solid var(--border-color);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; z-index: 2; color: #aaa;
-            transition: all 0.3s;
-        }
-        .step-dot.active {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
-            color: #000;
-        }
+        .logo { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 8px;}
+        .logo span { color: var(--blue-accent); font-size: 0.8rem; border: 1px solid var(--blue-accent); padding: 2px 6px; border-radius: 4px; }
+        .menu-item { padding: 10px 12px; border-radius: 8px; color: var(--text-muted); cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+        .menu-item.active { background-color: #004a77; color: #c2e7ff; font-weight: bold; }
+        .menu-item:hover:not(.active) { background-color: #2d2f31; }
 
-        /* 본문 스텝 내용 */
-        .step-content { display: none; text-align: center; animation: fadeIn 0.4s ease; }
-        .step-content.active { display: block; }
+        /* 오른쪽 메인 화면 */
+        .main-content { flex: 1; padding: 30px 40px; overflow-y: auto; position: relative; }
         
-        .step-image-mock {
-            background-color: #0f1012;
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 40px 20px;
-            margin: 20px 0;
-            font-size: 1.1rem;
+        /* 상단 바 */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        .top-bar h1 { font-size: 1.8rem; color: #fff; }
+        .top-actions { display: flex; gap: 12px; }
+        
+        /* 구글 디자인 버튼 */
+        .google-btn {
+            background-color: #303134;
+            color: var(--blue-accent);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
         }
-
-        .highlight-btn {
-            display: inline-block;
+        .google-btn.primary {
             background-color: #fff;
             color: #000;
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-weight: bold;
-            border: 1px solid #dadce0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            animation: pulse 1.5s infinite;
-        }
-
-        /* 하단 내비게이션 버튼 */
-        .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; }
-        .btn {
-            background-color: #303134;
-            color: #fff;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        .btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .btn.next { background-color: var(--primary-blue); color: #000; }
-
-        .key-box {
-            background: #202124;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-blue);
-            font-family: monospace;
-            color: var(--primary-blue);
-            font-size: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(138,180,248,0.6); } 100% { transform: scale(1); } }
+        /* 반짝이는 가이드 이펙트 */
+        .guide-flash {
+            animation: flash-animation 1.2s infinite alternate;
+            border: 2px solid #ff4b4b !important;
+            box-shadow: 0 0 15px #ff4b4b;
+        }
+
+        /* 테이블 구조 */
+        .table-container { background-color: #131314; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 20px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background-color: #1e1f20; padding: 14px 20px; font-size: 0.9rem; color: #fff; border-bottom: 1px solid var(--border-color); }
+        td { padding: 16px 20px; font-size: 0.9rem; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
+
+        /* 말풍선 가이드 창 (안내원 역할) */
+        .coach-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #282a2d;
+            border: 2px solid var(--blue-accent);
+            border-radius: 16px;
+            padding: 20px;
+            width: 360px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 999;
+            animation: slideUp 0.4s ease;
+        }
+        .coach-box h3 { color: var(--blue-accent); margin-bottom: 8px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .coach-box p { font-size: 0.95rem; line-height: 1.5; color: #fff; }
+
+        /* 팝업창 (가상) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal {
+            background: #202124; border: 1px solid var(--border-color);
+            padding: 24px; border-radius: 12px; width: 440px; text-align: center;
+        }
+        .modal h2 { font-size: 1.3rem; margin-bottom: 15px; color: #fff; }
+        .modal-btn {
+            background: #303134; color: var(--blue-accent); border: 1px solid var(--border-color);
+            padding: 12px; width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold;
+        }
+
+        .key-display {
+            background: #131314; padding: 12px; border-radius: 6px; border: 1px dashed var(--blue-accent);
+            margin: 15px 0; font-family: monospace; color: var(--blue-accent); font-size: 1.1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        @keyframes flash-animation { from { opacity: 0.6; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Google AI Studio <span>API 키 발급 가이드</span></h1>
-        <p>화면을 보면서 순서대로 따라오시면 1분 만에 키를 만들 수 있어요!</p>
-    </header>
+    <div class="sidebar">
+        <div class="logo">Google AI Studio <span>PRO모드 연습</span></div>
+        <div class="menu-item active"><i class="fa-solid fa-key"></i> API 키</div>
+        <div class="menu-item"><i class="fa-solid fa-folder"></i> 프로젝트</div>
+        <div class="menu-item"><i class="fa-solid fa-chart-simple"></i> 사용량</div>
+        <div class="menu-item"><i class="fa-solid fa-bolt"></i> 비율 제한</div>
+        <div class="menu-item"><i class="fa-solid fa-credit-card"></i> 결제</div>
+    </div>
 
-    <div class="guide-card">
-        <div class="progress-bar">
-            <div class="step-dot active">1</div>
-            <div class="step-dot">2</div>
-            <div class="step-dot">3</div>
-            <div class="step-dot">4</div>
-        </div>
-
-        <div class="step-content active" id="step1">
-            <h3>우측 상단의 버튼 찾기</h3>
-            <p style="color: #aaa; margin-top: 10px;">지금 보고 계신 AI Studio 화면 우측 상단을 보시면 아래와 같은 버튼이 있습니다.</p>
-            <div class="step-image-mock">
-                화면 오른쪽 위에서 <span class="highlight-btn"><i class="fa-solid fa-key"></i> API 키 만들기</span> 버튼을 클릭하세요!
-            </div>
-            <p>※ 만약 안 보인다면 좌측 메뉴에서 <strong>"API 키"</strong>가 선택되어 있는지 확인하세요.</p>
-        </div>
-
-        <div class="step-content" id="step2">
-            <h3>프로젝트 선택 또는 생성</h3>
-            <p style="color: #aaa; margin-top: 10px;">버튼을 누르면 작은 창(팝업)이 뜹니다.</p>
-            <div class="step-image-mock">
-                <i class="fa-solid fa-folder-open" style="color: #fbbc05;"></i> <strong>새 프로젝트에 API 키 만들기</strong> 라고 적힌 파란색 글씨를 누르세요.
-            </div>
-            <p>기존에 만들어둔 구글 클라우드 프로젝트가 있다면 목록에서 선택하셔도 됩니다.</p>
-        </div>
-
-        <div class="step-content" id="step3">
-            <h3>잠시만 기다리기 (키 생성 중)</h3>
-            <p style="color: #aaa; margin-top: 10px;">구글 시스템이 나만의 비밀 열쇠를 만드는 중입니다.</p>
-            <div class="step-image-mock">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-blue);"></i>
-                <p style="margin-top: 15px;">"API 키를 생성하는 중..." 메시지가 사라질 때까지 3초만 기다려주세요.</p>
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>API 키</h1>
+            <div class="top-actions">
+                <button class="google-btn"><i class="fa-solid fa-book"></i> API 빠른 시작</button>
+                <button class="google-btn primary guide-flash" id="targetCreateBtn">
+                    <i class="fa-solid fa-key"></i> API 키 만들기
+                </button>
             </div>
         </div>
 
-        <div class="step-content" id="step4">
-            <h3>복사해서 안전하게 보관하기 🎉</h3>
-            <p style="color: #aaa; margin-top: 10px;">짜잔! 복잡한 영어와 숫자로 된 키가 완성되었습니다.</p>
-            <div class="step-image-mock">
-                <div class="key-box">
-                    <span>AIzaSyBwX...너의_비밀_API_키</span>
-                    <button style="background: none; border: none; color: #fff; cursor: pointer;"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p style="margin-top: 15px; color: #f43f5e; font-size: 0.9rem;"><i class="fa-solid fa-circle-exclamation"></i> 주의: 이 키는 메모장에 따로 복사해 두시고, 절대 타인에게 보여주지 마세요!</p>
-            </div>
-        </div>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">그룹화 기준: <strong>● API 키</strong></p>
 
-        <div class="nav-btns">
-            <button class="btn" id="prevBtn" disabled>이전으로</button>
-            <button class="btn next" id="nextBtn">알겠습니다, 다음 단계! <i class="fa-solid fa-arrow-right"></i></button>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>키</th>
+                        <th>프로젝트</th>
+                        <th>생성일</th>
+                        <th>결제 등급</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--blue-accent);">...Agv4 <br><span style="font-size:0.75rem; color:#888;">Camera</span></td>
+                        <td>zeromeal<br><span style="font-size:0.75rem; color:#888;">gen-lang-client-0825</span></td>
+                        <td>2026. 5. 18.</td>
+                        <td><span style="color: var(--blue-accent);">결제 설정</span><br>무료 등급</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<script>
-    let currentStep = 1;
-    const totalSteps = 4;
+    <div class="coach-box" id="coachBox">
+        <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 왕초보 안내원</h3>
+        <p id="coachText">오른쪽 위에서 빨간색 테두리로 반짝이고 있는 <strong>[API 키 만들기]</strong> 버튼을 마우스로 클릭해 보세요!</p>
+    </div>
 
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dots = document.querySelectorAll('.step-dot');
-    const contents = document.querySelectorAll('.step-content');
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalStep1">
+            <h2>어떤 프로젝트에 키를 만들까요?</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">컴맹이거나 처음이시라면 그냥 맨 위에 있는 파란 글씨를 누르시면 됩니다.</p>
+            <button class="modal-btn guide-flash" id="projectCreateBtn" style="background-color: #fff; color: #000;">
+                <i class="fa-solid fa-plus"></i> 새 프로젝트에 API 키 만들기
+            </button>
+        </div>
 
-    function updateUI() {
-        // 콘텐츠 전환
-        contents.forEach((content, index) => {
-            if(index === currentStep - 1) content.classList.add('active');
-            else content.classList.remove('active');
-        });
+        <div class="modal" id="modalStep2" style="display: none;">
+            <h2>🎉 API 비밀 키가 생성되었습니다!</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">아래 발급된 영문 주소를 복사해서 메모장에 보관하세요.</p>
+            <div class="key-display">
+                <span id="secretKeyText">AIzaSyD_Practice_Key_Success_2026</span>
+                <button id="copyBtn" style="background:none; border:none; color:#fff; cursor:pointer;"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p style="color: #ff6b6b; font-size: 0.85rem; margin-bottom: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> 이 열쇠는 다른 사람에게 절대 보여주지 마세요!</p>
+            <button class="modal-btn" id="finalCloseBtn" style="background: var(--blue-accent); color: #000;">연습 완료! 실제 화면 하러 가기</button>
+        </div>
+    </div>
 
-        // 상단 도트 표시 전환
-        dots.forEach((dot, index) => {
-            if(index < currentStep) dot.classList.add('active');
-            else dot.classList.remove('active');
-        });
-
-        // 버튼 활성화 여부
-        prevBtn.disabled = (currentStep === 1);
+    <script>
+        const targetCreateBtn = document.getElementById('targetCreateBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalStep1 = document.getElementById('modalStep1');
+        const modalStep2 = document.getElementById('modalStep2');
+        const projectCreateBtn = document.getElementById('projectCreateBtn');
+        const finalCloseBtn = document.getElementById('finalCloseBtn');
+        const copyBtn = document.getElementById('copyBtn');
         
-        if (currentStep === totalSteps) {
-            nextBtn.innerHTML = '가이드 완료! <i class="fa-solid fa-check"></i>';
-            nextBtn.style.backgroundColor = '#4ade80';
-        } else {
-            nextBtn.innerHTML = '알겠습니다, 다음 단계! <i class="fa-solid fa-arrow-right"></i>';
-            nextBtn.style.backgroundColor = 'var(--primary-blue)';
-        }
-    }
+        const coachText = document.getElementById('coachText');
 
-    nextBtn.addEventListener('click', () => {
-        if(currentStep < totalSteps) {
-            currentStep++;
-            updateUI();
-        } else {
-            alert('이제 실제 Google AI Studio 화면 우측 상단의 [API 키 만들기] 버튼을 눌러 진행해 보세요!');
-        }
-    });
+        // 1단계: 상단 메인 버튼 클릭 시
+        targetCreateBtn.addEventListener('click', () => {
+            targetCreateBtn.classList.remove('guide-flash'); // 깜빡임 해제
+            modalOverlay.style.display = 'flex'; // 팝업창 등장
+            coachText.innerHTML = "잘하셨어요! 창이 하나 떴죠? 거기서 <strong>[새 프로젝트에 API 키 만들기]</strong>를 누르세요.";
+        });
 
-    prevBtn.addEventListener('click', () => {
-        if(currentStep > 1) {
-            currentStep--;
-            updateUI();
-        }
-    });
-</script>
+        // 2단계: 팝업창 내에서 프로젝트 만들기 클릭 시
+        projectCreateBtn.addEventListener('click', () => {
+            projectCreateBtn.classList.remove('guide-flash');
+            modalStep1.style.style = 'none';
+            modalStep1.style.display = 'none';
+            modalStep2.style.display = 'block'; // 결과창 등장
+            coachText.innerHTML = "모든 과정이 끝났습니다! 발급된 키 옆의 <strong>[복사]</strong> 아이콘을 누른 뒤 활용하시면 됩니다. 수고하셨습니다! 👍";
+        });
 
+        // 3단계: 복사 버튼 누를 때
+        copyBtn.addEventListener('click', () => {
+            alert('비밀 키가 복사되었습니다! 실제 메모장(Ctrl+V)에 붙여넣을 수 있습니다.');
+        });
+
+        // 4단계: 최종 종료 버튼
+        finalCloseBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+            coachText.innerHTML = "축하합니다! 발급 과정을 마스터하셨습니다. 이제 <strong>진짜 Google AI Studio 화면</strong>의 오른쪽 위 버튼을 눌러 똑같이 진행해 보세요!";
+            alert('축하합니다! 가이드 실습이 완료되었습니다. 이제 실제 화면 우측 상단에서 [API 키 만들기] 버튼을 눌러보세요!');
+        });
+    </script>
 </body>
 </html>
